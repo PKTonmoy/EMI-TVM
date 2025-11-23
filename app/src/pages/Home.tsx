@@ -82,7 +82,7 @@ export const Home: React.FC = () => {
                             onChange={setInterestRate}
                             type="number"
                             suffix="%"
-                            step="0.1"
+                            step={0.1}
                         />
 
                         <Button

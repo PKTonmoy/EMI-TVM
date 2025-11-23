@@ -1,6 +1,6 @@
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import type { EMIResult, AmortizationRow } from './calculations';
+import type { EMIResult } from './calculations';
 import { generateAmortizationSchedule, formatCurrency } from './calculations';
 
 export const exportAmortizationPDF = (emiResult: EMIResult): void => {
@@ -22,7 +22,7 @@ export const exportAmortizationPDF = (emiResult: EMIResult): void => {
     doc.setFontSize(10);
     doc.text(`Principal Amount: ${formatCurrency(emiResult.principal)}`, 20, 55);
     doc.text(`Interest Rate: ${emiResult.interestRate}% per annum`, 20, 62);
-    doc.text(`Loan Tenure: ${emiResult.tenure} months`, 20, 69);
+    // doc.text(`Loan Tenure: ${emiResult.tenure} months`, 20, 69);
 
     doc.text(`Monthly EMI: ${formatCurrency(emiResult.monthlyEMI)}`, 120, 55);
     doc.text(`Total Interest: ${formatCurrency(emiResult.totalInterest)}`, 120, 62);
