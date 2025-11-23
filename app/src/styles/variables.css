@@ -1,0 +1,79 @@
+:root {
+  /* Primary Colors - Money Green Theme */
+  --color-primary: #2D6E3E;
+  --color-primary-light: #3B8F4D;
+  --color-accent: #A8E6CF;
+
+  /* Gradients - Money Green */
+  --gradient-bg: linear-gradient(180deg, #F0F9F3 0%, #FFFFFF 100%);
+  --gradient-button: linear-gradient(135deg, #2D6E3E 0%, #3B8F4D 100%);
+  --gradient-card: linear-gradient(135deg, #2D6E3E 0%, #3B8F4D 100%);
+
+  /* Neutrals - Light Mode */
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F5F7FA;
+  --color-text-primary: #1A202C;
+  --color-text-secondary: #6B7280;
+  --color-border: #E5E7EB;
+
+  /* Semantic */
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-error: #EF4444;
+  --color-info: #2D6E3E;
+
+  /* Shadows - Money Green Glow */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 12px 24px rgba(0, 0, 0, 0.15);
+  --shadow-glow: 0 0 20px rgba(45, 110, 62, 0.4);
+
+  /* Spacing */
+  --spacing-xxs: 4px;
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+
+  /* Border Radius */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Typography - SF Pro Font Stack */
+  --font-primary: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", "Segoe UI", "Roboto", sans-serif;
+  --font-numeric: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", "Segoe UI", "Roboto", sans-serif;
+
+  /* Transitions */
+  --transition-fast: 200ms;
+  --transition-normal: 300ms;
+  --transition-slow: 500ms;
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="dark"] {
+  /* Neutrals - Dark Mode */
+  --color-bg-primary: #1E293B;
+  --color-bg-secondary: #0F172A;
+  --color-text-primary: #F9FAFB;
+  --color-text-secondary: #9CA3AF;
+  --color-border: #374151;
+
+  /* Adjusted gradients - Deep Forest Green */
+  --gradient-bg: linear-gradient(180deg, #0F1B14 0%, #1A2E1F 100%);
+  --gradient-button: linear-gradient(135deg, #1F4D2A 0%, #2D6E3E 100%);
+  --gradient-card: linear-gradient(135deg, #1F4D2A 0%, #2D6E3E 100%);
+
+  /* Shadows - Adjusted for dark */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 20px rgba(45, 110, 62, 0.3);
+}

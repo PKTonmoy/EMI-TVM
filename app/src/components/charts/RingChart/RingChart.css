@@ -1,0 +1,62 @@
+.ring-chart-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-lg);
+}
+
+.ring-chart {
+    position: relative;
+}
+
+.ring-chart-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    pointer-events: none;
+}
+
+.ring-chart-legend {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.ring-chart-legend-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.ring-chart-legend-row {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.ring-chart-legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.ring-chart-legend-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: currentColor;
+    opacity: 0.9;
+}
+
+.ring-chart-legend-value {
+    font-size: 16px;
+    font-weight: 600;
+    margin-left: 20px;
+}
