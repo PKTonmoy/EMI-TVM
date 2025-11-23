@@ -1,0 +1,30 @@
+.tenure-toggle {
+    display: flex;
+    gap: 4px;
+    background: var(--color-bg-secondary);
+    padding: 4px;
+    border-radius: var(--radius-md);
+}
+
+.tenure-toggle-btn {
+    flex: 1;
+    padding: 8px 16px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.tenure-toggle-btn.active {
+    background: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.tenure-toggle-btn:hover:not(.active) {
+    color: var(--color-text-primary);
+}

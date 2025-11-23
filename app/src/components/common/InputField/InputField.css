@@ -1,0 +1,70 @@
+.input-field {
+    margin-bottom: var(--spacing-lg);
+}
+
+.input-field-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.input-field-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: var(--color-bg-primary);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 0 var(--spacing-md);
+    transition: all var(--transition-fast);
+}
+
+.input-field-wrapper:focus-within {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(10, 36, 99, 0.1);
+}
+
+.input-field-prefix,
+.input-field-suffix {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    user-select: none;
+}
+
+.input-field-prefix {
+    margin-right: var(--spacing-xs);
+}
+
+.input-field-suffix {
+    margin-left: var(--spacing-xs);
+}
+
+.input-field-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    height: 48px;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    font-family: var(--font-numeric);
+}
+
+.input-field-input::placeholder {
+    color: var(--color-text-tertiary);
+}
+
+/* Remove number input spinners */
+.input-field-input[type='number']::-webkit-inner-spin-button,
+.input-field-input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.input-field-input[type='number'] {
+    -moz-appearance: textfield;
+}

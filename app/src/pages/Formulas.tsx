@@ -21,6 +21,20 @@ export const Formulas: React.FC = () => {
                         result: 'EMI = $1,896.59',
                     },
                 },
+                {
+                    name: 'Loan Principal (Present Value)',
+                    formula: 'P = EMI × [((1 + r)^n - 1) / (r × (1 + r)^n)]',
+                    variables: [
+                        { symbol: 'EMI', description: 'Equated Monthly Installment' },
+                        { symbol: 'r', description: 'Monthly interest rate (annual rate / 12 / 100)' },
+                        { symbol: 'n', description: 'Tenure in months' },
+                    ],
+                    example: {
+                        input: 'EMI = $1,896.59, Annual Rate = 9%, Tenure = 14 months',
+                        calculation: 'r = 0.0075, n = 14\nP = 1896.59 × [(1.1102 - 1) / (0.0075 × 1.1102)]',
+                        result: 'P = $25,000',
+                    },
+                },
             ],
         },
         {

@@ -1,17 +1,27 @@
 .breakdown-page {
     min-height: 100vh;
-    padding: var(--spacing-lg) 0 80px 0;
+    /* Retained from original as it's not explicitly removed */
+    padding: var(--spacing-lg);
+    padding-bottom: var(--spacing-xl);
+}
+
+/* Mobile: add extra bottom padding for fixed navigation */
+@media (max-width: 767px) {
+    .breakdown-page {
+        padding-bottom: calc(200px + var(--spacing-xl));
+    }
 }
 
 @media (min-width: 768px) {
     .breakdown-page {
-        padding: var(--spacing-xl) 0;
+        padding: var(--spacing-2xl) 0;
     }
 }
 
 .breakdown-content {
     max-width: 1000px;
     margin: 0 auto;
+    padding: 0 var(--spacing-md);
     display: flex;
     flex-direction: column;
     gap: var(--spacing-lg);
@@ -19,6 +29,7 @@
 
 .page-title {
     margin-bottom: var(--spacing-sm);
+    color: var(--color-text-primary);
 }
 
 /* Summary Card */
@@ -90,6 +101,11 @@
 /* Table Card */
 .table-card {
     overflow: hidden;
+    background: var(--color-bg-primary);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-border-light);
+    box-shadow: var(--shadow-sm);
+    padding: var(--spacing-lg);
 }
 
 .table-header {
@@ -103,7 +119,7 @@
 
 .table-wrapper {
     overflow-x: auto;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-lg);
     border: 1px solid var(--color-border);
 }
 
@@ -141,7 +157,7 @@
 }
 
 .amortization-table tbody tr:hover {
-    background: rgba(43, 127, 246, 0.05);
+    background: rgba(10, 36, 99, 0.05);
 }
 
 .amortization-table td {

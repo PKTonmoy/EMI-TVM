@@ -9,7 +9,7 @@ interface ButtonProps {
   loading?: boolean;
   fullWidth?: boolean;
   size?: 'small' | 'medium' | 'large';
-  variant?: 'primary' | 'secondary' | 'text';
+  variant?: 'primary' | 'secondary' | 'text' | 'gradient';
   glow?: boolean;
   type?: 'button' | 'submit' | 'reset';
   className?: string;
@@ -36,22 +36,18 @@ export const Button: React.FC<ButtonProps> = ({
       disabled={disabled || loading}
       style={style}
       className={clsx(
-        'btn',
-        `btn-${variant}`,
-        `btn-${size}`,
+        'button',
+        `button-${variant}`,
+        `button-${size}`,
         {
-          'btn-glow': glow && variant === 'primary',
-          'btn-full-width': fullWidth,
-          'btn-loading': loading,
+          'button-glow': glow,
+          'button-full-width': fullWidth,
+          'button-loading': loading,
         },
         className
       )}
     >
-      {loading ? (
-        <span className="btn-spinner" />
-      ) : (
-        children
-      )}
+      {loading ? null : children}
     </button>
   );
 };

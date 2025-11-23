@@ -1,113 +1,155 @@
-.btn {
+.button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: var(--spacing-xs);
+    gap: 8px;
     font-family: var(--font-primary);
     font-weight: 600;
     border: none;
     cursor: pointer;
-    transition: all var(--transition-normal) var(--ease-in-out);
-    letter-spacing: 0.5px;
+    transition: all var(--transition-fast);
     text-decoration: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+    overflow: hidden;
 }
 
-.btn:disabled {
+.button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
 }
 
+.button:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+/* Variants */
+.button-primary {
+    background: var(--gradient-button);
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+.button-primary:hover:not(:disabled) {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-1px);
+}
+
+.button-secondary {
+    background: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+}
+
+.button-secondary:hover:not(:disabled) {
+    background: var(--color-bg-tertiary);
+    border-color: var(--color-border);
+}
+
+.button-text {
+    background: transparent;
+    color: var(--color-text-secondary);
+}
+
+.button-text:hover:not(:disabled) {
+    background: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+}
+
+.button-gradient {
+    background: var(--gradient-card);
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+.button-gradient:hover:not(:disabled) {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-1px);
+}
+
 /* Sizes */
-.btn-small {
-    height: 40px;
+.button-small {
+    height: 36px;
     padding: 0 16px;
     font-size: 14px;
     border-radius: var(--radius-md);
 }
 
-.btn-medium {
-    height: 48px;
+.button-medium {
+    height: 44px;
     padding: 0 20px;
-    font-size: 16px;
-    border-radius: 14px;
-}
-
-.btn-large {
-    height: 56px;
-    padding: 0 24px;
-    font-size: 16px;
+    font-size: 15px;
     border-radius: var(--radius-lg);
 }
 
-/* Variants */
-.btn-primary {
-    background: var(--gradient-button);
-    color: #FFFFFF;
-    box-shadow: 0 4px 16px rgba(59, 143, 77, 0.4);
+.button-large {
+    height: 52px;
+    padding: 0 24px;
+    font-size: 16px;
+    border-radius: var(--radius-lg);
+    font-weight: 700;
 }
 
-.btn-primary:hover:not(:disabled) {
-    transform: scale(1.02);
-    box-shadow: 0 6px 20px rgba(59, 143, 77, 0.5);
-}
-
-.btn-primary:active:not(:disabled) {
-    transform: scale(0.98);
-}
-
-.btn-primary.btn-glow {
-    box-shadow:
-        0 4px 16px rgba(59, 143, 77, 0.4),
-        0 0 20px rgba(59, 143, 77, 0.5);
-}
-
-.btn-primary.btn-glow:hover:not(:disabled) {
-    box-shadow:
-        0 6px 20px rgba(59, 143, 77, 0.5),
-        0 0 20px rgba(59, 143, 77, 0.3);
-}
-
-.btn-secondary {
-    background: transparent;
-    color: var(--color-primary);
-    border: 2px solid var(--color-primary);
-}
-
-.btn-secondary:hover:not(:disabled) {
-    background: rgba(59, 143, 77, 0.05);
-}
-
-.btn-text {
-    background: transparent;
-    color: var(--color-primary);
-    padding: 8px 16px;
-}
-
-.btn-text:hover:not(:disabled) {
-    background: rgba(59, 143, 77, 0.05);
-}
-
-/* Full Width */
-.btn-full-width {
+/* Full width */
+.button-full-width {
     width: 100%;
 }
 
-/* Loading */
-.btn-loading {
+/* Glow effect */
+.button-glow {
+    box-shadow: var(--shadow-glow);
+}
+
+.button-glow:hover:not(:disabled) {
+    box-shadow: var(--shadow-glow), var(--shadow-lg);
+}
+
+/* Loading state */
+.button-loading {
+    position: relative;
+    color: transparent;
     pointer-events: none;
 }
 
-.btn-spinner {
-    width: 20px;
-    height: 20px;
-    border: 2px solid currentColor;
-    border-top-color: transparent;
+.button-loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+    border: 2px solid transparent;
+    border-top-color: currentColor;
     border-radius: 50%;
-    animation: spin 0.6s linear infinite;
+    animation: button-spin 0.6s linear infinite;
 }
 
-@keyframes spin {
+@keyframes button-spin {
     to {
         transform: rotate(360deg);
+    }
+}
+
+/* Focus styles */
+.button:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Mobile touch optimization */
+@media (max-width: 767px) {
+    .button-small {
+        min-height: 36px;
+    }
+
+    .button-medium {
+        min-height: 44px;
+    }
+
+    .button-large {
+        min-height: 52px;
     }
 }

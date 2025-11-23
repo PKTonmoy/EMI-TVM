@@ -2,8 +2,41 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background: var(--gradient-bg);
 }
 
 .app-content {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 440px;
+  margin: 0 auto;
+  width: 100%;
+  padding-bottom: 80px;
+  /* Space for fixed bottom nav on mobile */
+}
+
+/* Aspect ratio for mobile */
+@media (max-width: 767px) {
+  .app-content {
+    aspect-ratio: 9 / 16;
+    /* Android */
+    min-height: 100vh;
+  }
+
+  /* iOS Safari */
+  @supports (-webkit-touch-callout: none) {
+    .app-content {
+      aspect-ratio: 9 / 15.5;
+    }
+  }
+}
+
+/* Desktop - no bottom padding needed since nav is static at top */
+@media (min-width: 768px) {
+  .app-content {
+    padding-bottom: 0;
+    max-width: 100%;
+    aspect-ratio: unset;
+  }
 }

@@ -1,21 +1,31 @@
 .tvm-page {
     min-height: 100vh;
-    padding: var(--spacing-lg) 0 80px 0;
+    padding: var(--spacing-lg);
+    padding-bottom: var(--spacing-xl);
+}
+
+/* Mobile: add extra bottom padding for fixed navigation */
+@media (max-width: 767px) {
+    .tvm-page {
+        padding-bottom: calc(200px + var(--spacing-xl));
+    }
 }
 
 @media (min-width: 768px) {
     .tvm-page {
-        padding: var(--spacing-xl) 0;
+        padding: var(--spacing-2xl) 0;
     }
 }
 
 .tvm-content {
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 var(--spacing-md);
 }
 
 .page-title {
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-text-primary);
 }
 
 .page-subtitle {
@@ -49,6 +59,18 @@
     min-height: 180px;
     display: flex;
     align-items: flex-end;
+    background: var(--color-bg-primary);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-border-light);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-normal);
+    cursor: pointer;
+}
+
+.calculator-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--color-primary);
 }
 
 .card-gradient-bg {
@@ -57,28 +79,33 @@
     left: 0;
     right: 0;
     bottom: 0;
-    opacity: 0.1;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+    opacity: 0.05;
     transition: opacity var(--transition-normal);
 }
 
 .calculator-card:hover .card-gradient-bg {
-    opacity: 0.15;
+    opacity: 0.1;
 }
 
 .card-content {
     position: relative;
     z-index: 1;
     width: 100%;
+    padding: var(--spacing-lg);
 }
 
 .calc-icon {
     font-size: 40px;
     display: block;
     margin-bottom: var(--spacing-sm);
+    color: var(--color-primary);
 }
 
 .calc-name {
     margin-bottom: var(--spacing-xs);
+    color: var(--color-text-primary);
+    font-weight: 600;
 }
 
 .calc-description {
@@ -91,12 +118,12 @@
 .calculator-detail {
     max-width: 700px;
     margin: 0 auto;
-    padding-bottom: 80px;
+    padding: 0 var(--spacing-md) var(--spacing-2xl);
 }
 
 @media (min-width: 768px) {
     .calculator-detail {
-        padding-bottom: 0;
+        padding-bottom: var(--spacing-xl);
     }
 }
 
@@ -104,10 +131,12 @@
     font-size: 14px;
     font-weight: 500;
     margin-bottom: 4px;
+    color: var(--color-text-secondary);
 }
 
 .heading-4 {
     font-size: 16px;
     font-weight: 600;
     margin-bottom: var(--spacing-sm);
+    color: var(--color-text-primary);
 }

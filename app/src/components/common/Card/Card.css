@@ -24,14 +24,28 @@
     border: 2px solid var(--color-border);
 }
 
-.card-glass {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+.card-gl.card {
+    background: var(--color-bg-primary);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-lg);
+    transition: all var(--transition-normal);
+    border: 1px solid var(--color-border-light);
 }
 
-[data-theme="dark"] .card-glass {
-    background: rgba(30, 41, 59, 0.7);
+/* Variants */
+.card-default {
+    box-shadow: var(--shadow-sm);
+}
+
+.card-elevated {
+    box-shadow: var(--shadow-md);
+}
+
+.card-gradient {
+    background: var(--gradient-card);
+    color: white;
+    border: none;
+    box-shadow: var(--shadow-lg);
 }
 
 /* Padding */
@@ -44,20 +58,18 @@
 }
 
 .card-padding-medium {
-    padding: var(--spacing-lg);
+    padding: var(--spacing-md);
 }
 
 .card-padding-large {
     padding: var(--spacing-lg);
 }
 
-@media (min-width: 768px) {
-    .card-padding-large {
-        padding: var(--spacing-xl);
-    }
+.card-padding-xlarge {
+    padding: var(--spacing-xl);
 }
 
-/* Border Radius */
+/* Rounded */
 .card-rounded-small {
     border-radius: var(--radius-sm);
 }
@@ -74,7 +86,11 @@
     border-radius: var(--radius-xl);
 }
 
-/* Shadows */
+.card-rounded-2xlarge {
+    border-radius: var(--radius-2xl);
+}
+
+/* Shadow */
 .card-shadow-none {
     box-shadow: none;
 }
@@ -91,10 +107,6 @@
     box-shadow: var(--shadow-lg);
 }
 
-.card-gradient.card-shadow-large {
-    box-shadow: 0 8px 32px rgba(43, 127, 246, 0.15);
-}
-
 /* Hoverable */
 .card-hoverable {
     cursor: pointer;
@@ -102,12 +114,30 @@
 
 .card-hoverable:hover {
     transform: translateY(-2px);
-}
-
-.card-white.card-hoverable:hover {
     box-shadow: var(--shadow-lg);
 }
 
-.card-gradient.card-hoverable:hover {
-    box-shadow: 0 12px 40px rgba(43, 127, 246, 0.25);
+.card-hoverable:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-md);
+}
+
+/* Border */
+.card-bordered {
+    border: 1px solid var(--color-border);
+}
+
+/* Responsive padding adjustments */
+@media (max-width: 767px) {
+    .card {
+        padding: var(--spacing-md);
+    }
+
+    .card-padding-large {
+        padding: var(--spacing-md);
+    }
+
+    .card-padding-xlarge {
+        padding: var(--spacing-lg);
+    }
 }

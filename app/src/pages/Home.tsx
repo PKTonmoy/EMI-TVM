@@ -1,202 +1,184 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, RefreshCw } from 'lucide-react';
 import { Card } from '../components/common/Card';
 import { Button } from '../components/common/Button';
-import { Slider } from '../components/common/Slider';
 import { RingChart } from '../components/charts/RingChart';
+import { TenureToggle, type TenureUnit } from '../components/common/TenureToggle';
+import { InputField } from '../components/common/InputField';
 import { CurrencySelector } from '../components/common/CurrencySelector';
-import { calculateEMI, formatCurrency } from '../utils/calculations';
-import { useCalculatorStore } from '../store/calculatorStore';
+import { calculateEMI, formatCompactCurrency } from '../utils/calculations';
 import { useCurrencyStore } from '../store/currencyStore';
+import { useCalculatorStore } from '../store/calculatorStore';
 import type { EMIResult } from '../utils/calculations';
 import './Home.css';
 
 export const Home: React.FC = () => {
     const navigate = useNavigate();
-    const {
-        loanAmount,
-        interestRate,
-        tenureMonths,
-        setLoanAmount,
-        setInterestRate,
-        setTenureMonths,
-        reset
-    } = useCalculatorStore();
-
-    const { selectedCurrency } = useCurrencyStore();
-
+    const [view, setView] = useState<'input' | 'results'>('input');
+    const [loanAmount, setLoanAmount] = useState('5000000');
+    const [tenure, setTenure] = useState('10');
+    const [tenureUnit, setTenureUnit] = useState<TenureUnit>('years');
+    const [interestRate, setInterestRate] = useState('9.5');
     const [emiResult, setEmiResult] = useState<EMIResult | null>(null);
 
-    useEffect(() => {
-        const result = calculateEMI(loanAmount, interestRate, tenureMonths);
-        setEmiResult(result);
-    }, [loanAmount, interestRate, tenureMonths]);
+    const { selectedCurrency } = useCurrencyStore();
+    const { setLoanAmount: setStoreLoanAmount, setTenureMonths, setInterestRate: setStoreInterestRate } = useCalculatorStore();
 
+    const handleCalculate = () => {
+        const amount = parseFloat(loanAmount) || 0;
+        const rate = parseFloat(interestRate) || 0;
+        const tenureValue = parseFloat(tenure) || 0;
+        const tenureMonths = tenureUnit === 'years' ? tenureValue * 12 : tenureValue;
+
+        // Update calculator store for breakdown page
+        setStoreLoanAmount(amount);
+        setTenureMonths(tenureMonths);
+        setStoreInterestRate(rate);
+
+        // Calculate and set result
+        const result = calculateEMI(amount, rate, tenureMonths);
+        setEmiResult(result);
+        setView('results');
+    };
+
+    const handleBack = () => {
+        setView('input');
+    };
+
+    const handleViewBreakdown = () => {
+        navigate('/breakdown');
+    };
+
+    if (view === 'input') {
+        return (
+            <div className="home-page">
+                <div className="home-content">
+                    <h1 className="page-title">Loan<br />EMI Calculator</h1>
+
+                    <Card>
+                        <CurrencySelector />
+
+                        <InputField
+                            label="Loan Amount"
+                            value={loanAmount}
+                            onChange={setLoanAmount}
+                            type="number"
+                            prefix={selectedCurrency.symbol}
+                        />
+
+                        <div className="tenure-input-group">
+                            <InputField
+                                label="Loan Tenure"
+                                value={tenure}
+                                onChange={setTenure}
+                                type="number"
+                                suffix={<TenureToggle value={tenureUnit} onChange={setTenureUnit} />}
+                            />
+                        </div>
+
+                        <InputField
+                            label="Interest Rate"
+                            value={interestRate}
+                            onChange={setInterestRate}
+                            type="number"
+                            suffix="%"
+                            step="0.1"
+                        />
+
+                        <Button
+                            variant="primary"
+                            size="large"
+                            fullWidth
+                            onClick={handleCalculate}
+                        >
+                            Calculate EMI
+                        </Button>
+                    </Card>
+                </div>
+            </div>
+        );
+    }
+
+    // Results View
     if (!emiResult) return null;
 
     const chartData = [
         {
             name: 'Principal Amount',
             value: emiResult.principal,
-            color: '#2D6E3E',
+            color: '#0A2463',
         },
         {
             name: 'Interest Payable',
             value: emiResult.totalInterest,
-            color: '#A8E6CF',
+            color: '#60A5FA',
         },
     ];
 
     return (
         <div className="home-page">
-            <div className="container">
-                <div className="home-header">
-                    <Button
-                        variant="text"
-                        size="small"
-                        onClick={() => navigate(-1)}
-                        className="back-button"
-                    >
-                        <ArrowLeft size={20} />
-                        <span>Back</span>
-                    </Button>
-                    <h1 className="page-title-small">EMI Calculator</h1>
-                    <div className="header-actions">
-                        <CurrencySelector />
-                        <Button
-                            variant="text"
-                            size="small"
-                            onClick={reset}
-                            className="reset-button"
-                        >
-                            <RefreshCw size={18} />
-                        </Button>
-                    </div>
-                </div>
+            <div className="home-content">
+                <button className="back-button-simple" onClick={handleBack}>
+                    ← Back
+                </button>
 
-                <div className="home-content">
-                    {/* Result Card */}
-                    <Card variant="gradient" rounded="xlarge" shadow="large" className="result-card slide-up">
-                        <div className="result-header">
-                            <div className="result-icon-wrapper">
-                                <span className="result-icon-text" style={{ fontSize: '24px', fontWeight: 'bold', color: 'white' }}>
-                                    {selectedCurrency.symbol}
-                                </span>
-                            </div>
-                            <div className="result-info">
-                                <h3 className="result-label">Your EMI is</h3>
-                                <h1 className="result-amount display-1 numeric count-up">
-                                    {formatCurrency(emiResult.monthlyEMI, selectedCurrency.symbol)}
-                                </h1>
-                                <p className="result-sublabel">per month</p>
-                            </div>
-                        </div>
-
-                        <div className="result-divider" />
-
-                        <div className="result-breakdown">
-                            <div className="breakdown-row">
-                                <div className="breakdown-item">
-                                    <span className="breakdown-label">Principal Amount</span>
-                                    <strong className="breakdown-value numeric">
-                                        {formatCurrency(emiResult.principal, selectedCurrency.symbol)}
-                                    </strong>
+                <Card>
+                    <div className="result-chart-container">
+                        <RingChart
+                            data={chartData}
+                            centerContent={
+                                <div className="chart-center">
+                                    <div className="chart-center-label">Your EMI is</div>
+                                    <div className="chart-center-value">
+                                        {formatCompactCurrency(emiResult.monthlyEMI, selectedCurrency.symbol)}
+                                    </div>
+                                    <div className="chart-center-sublabel">per Month</div>
                                 </div>
-                                <div className="breakdown-item">
-                                    <span className="breakdown-label">Interest Payable</span>
-                                    <strong className="breakdown-value numeric">
-                                        {formatCurrency(emiResult.totalInterest, selectedCurrency.symbol)}
-                                    </strong>
-                                </div>
-                            </div>
-
-                            <div className="breakdown-total">
-                                <span className="breakdown-label">Total Payment</span>
-                                <strong className="breakdown-value numeric">
-                                    {formatCurrency(emiResult.totalPayment, selectedCurrency.symbol)}
-                                </strong>
-                            </div>
-                        </div>
-
-                        <div className="result-chart">
-                            <RingChart
-                                data={chartData}
-                                size={160}
-                                centerContent={
-                                    <>
-                                        <div className="chart-center-value numeric">
-                                            {formatCurrency(emiResult.monthlyEMI, selectedCurrency.symbol)}
-                                        </div>
-                                        <div className="chart-center-label">per month</div>
-                                    </>
-                                }
-                                showLegend={false}
-                            />
-                        </div>
-                    </Card>
-
-                    {/* Input Card */}
-                    <Card className="input-card slide-up" style={{ animationDelay: '0.1s' }}>
-                        <Slider
-                            label="Loan Amount"
-                            value={loanAmount}
-                            min={1000}
-                            max={10000000}
-                            step={1000}
-                            prefix={selectedCurrency.symbol}
-                            formatter={(val) => val.toLocaleString()}
-                            onChange={setLoanAmount}
-                            showInput={true}
+                            }
                         />
-
-                        <Slider
-                            label="Interest Rate"
-                            value={interestRate}
-                            min={0.1}
-                            max={30}
-                            step={0.1}
-                            suffix="%"
-                            formatter={(val) => val.toFixed(1)}
-                            onChange={setInterestRate}
-                            showInput={true}
-                        />
-
-                        <Slider
-                            label="Loan Tenure (Months)"
-                            value={tenureMonths}
-                            min={1}
-                            max={360}
-                            step={1}
-                            onChange={setTenureMonths}
-                            showInput={true}
-                        />
-                    </Card>
-
-                    {/* Action Buttons */}
-                    <div className="action-buttons slide-up" style={{ animationDelay: '0.2s' }}>
-                        <Button
-                            fullWidth
-                            size="large"
-                            glow
-                            onClick={() => alert('Application submitted!')}
-                        >
-                            Apply
-                        </Button>
-
-                        <a
-                            href="/breakdown"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                navigate('/breakdown');
-                            }}
-                            className="link-button"
-                        >
-                            View Full Breakdown →
-                        </a>
                     </div>
-                </div>
+
+                    <div className="result-breakdown">
+                        <div className="breakdown-item">
+                            <span className="breakdown-label">Principal Amount</span>
+                            <span className="breakdown-value">
+                                {formatCompactCurrency(emiResult.principal, selectedCurrency.symbol)}
+                            </span>
+                        </div>
+                        <div className="breakdown-item">
+                            <span className="breakdown-label">Total Interest</span>
+                            <span className="breakdown-value">
+                                {formatCompactCurrency(emiResult.totalInterest, selectedCurrency.symbol)}
+                            </span>
+                        </div>
+                        <div className="breakdown-item">
+                            <span className="breakdown-label">Total Payment</span>
+                            <span className="breakdown-value">
+                                {formatCompactCurrency(emiResult.totalPayment, selectedCurrency.symbol)}
+                            </span>
+                        </div>
+                    </div>
+                </Card>
+
+                <Button
+                    variant="secondary"
+                    size="large"
+                    fullWidth
+                    onClick={handleViewBreakdown}
+                >
+                    View Full Breakdown
+                </Button>
+
+                <Button
+                    variant="text"
+                    size="medium"
+                    fullWidth
+                    onClick={() => setView('input')}
+                >
+                    Recalculate
+                </Button>
             </div>
         </div>
     );
 };
+
